@@ -1,6 +1,9 @@
 #### Netflix GPT 
 - npx create-react-app to create a react app 
 - added tailwind cdd into the app 
+- header 
+- login form 
+- Sign up form 
 
 ## Features 
 - Home page 
