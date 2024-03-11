@@ -1,11 +1,115 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "./Header";
+import { checkValidData } from "../utils/validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isSignInForm, setIsSignInForm] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const email = useRef(null);
+  const password = useRef(null);
+  const name = useRef(null);
 
   const handleClick = () => {
     setIsSignInForm(!isSignInForm);
+  };
+
+  const handleButtonClick = () => {
+    //validate the form data
+    const message = checkValidData(
+      email && email.current ? email.current.value : "",
+      password && password.current ? password.current.value : "",
+      name && name.current ? name.current.value : ""
+    );
+    setErrorMessage(message);
+    if (message) return;
+
+    // create a new user sign in/ sign up logic here
+    if (!isSignInForm) {
+      // sign up form
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password?.current?.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log(user);
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL: "https://avatars.githubusercontent.com/u/11907609?v=4",
+          })
+            .then(() => {
+              console.log("user has been updated");
+              const { email, displayName, uid, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uuid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+              navigate("/browse");
+              // Profile updated!
+              // ...
+            })
+            .catch((error) => {
+              console.log("error while updating the profile", error);
+              // An error occurred
+              // ...
+            });
+
+          // ...
+        })
+        .catch((error) => {
+          console.log(error);
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorMessage);
+          // ..
+        });
+    } else {
+      console.log("sing in with enail and password");
+      // sign in form
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password?.current?.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          const { email, displayName, uid, photoURL } = user;
+          dispatch(
+            addUser({
+              uuid: uid,
+              email: email,
+              displayName: displayName,
+              photoURL: photoURL,
+            })
+          );
+          navigate("/browse");
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorMessage);
+        });
+    }
   };
 
   return (
@@ -17,28 +121,35 @@ const Login = () => {
           alt="bImg"
         />
       </div>
-      <form className="absolute w-4/12 p-12 bg-opacity-70 my-36 mx-auto right-0 left-0 text-white bg-black">
-        <h1 className="font-bold text-2xl p-2">
-          {isSignInForm ? "Sign In" : "Sign up"}
-        </h1>
+      <form
+        className="absolute w-4/12 p-12 bg-opacity-70 my-36 mx-auto right-0 left-0 text-white bg-black"
+        onSubmit={(e) => e.preventDefault()}
+      >
         {!isSignInForm && (
           <input
             type="text"
             placeholder="Full Name"
             className="p-4 m-2 w-full bg-gray-900 rounded-sm"
+            ref={name}
           ></input>
         )}
         <input
           type="text"
+          ref={email}
           placeholder="Email address"
           className="p-4 m-2 w-full bg-gray-900 rounded-sm"
         ></input>
         <input
-          type="text"
+          type="password"
+          ref={password}
           placeholder="Password"
           className="p-4 m-2 w-full bg-gray-900 rounded-sm"
         ></input>
-        <button className="py-4 m-4 bg-red-600 rounded-lg w-1/2">
+        <p className="text-red-500 font-bold py-2 text-lg">{errorMessage}</p>
+        <button
+          className="py-4 m-4 bg-red-600 rounded-lg w-full"
+          onClick={handleButtonClick}
+        >
           {isSignInForm ? "Sign In" : "Sign up"}
         </button>
         <p className="py-4 cursor-pointer " onClick={handleClick}>
