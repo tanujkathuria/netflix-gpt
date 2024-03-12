@@ -1,18 +1,48 @@
-import { signOut } from "firebase/auth";
-import React from "react";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import React, { useEffect } from "react";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser, removeUser } from "../utils/userSlice";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/auth.user
+        console.log(user);
+        const { email, displayName, uid, photoURL } = user;
+        dispatch(
+          addUser({
+            uuid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          })
+        );
+        navigate("/browse");
+        // ...
+      } else {
+        // User is signed out
+        // ...
+        console.log("user has signed out");
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
   console.log(user);
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
-        navigate("/");
       })
       .catch((error) => {
         // An error happened.
@@ -31,9 +61,6 @@ const Header = () => {
       ></img>
 
       <div className="flex justify-between w-42 h-14 m-4 cursor-pointer px-1">
-        <span className="text-red font-bold align-center">
-          hello {user?.displayName}
-        </span>
         <div className="flex m-1">
           <img alt="profilepic" src={user?.photoURL}></img>
         </div>

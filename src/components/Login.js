@@ -61,7 +61,6 @@ const Login = () => {
                   photoURL: photoURL,
                 })
               );
-              navigate("/browse");
               // Profile updated!
               // ...
             })
@@ -101,7 +100,6 @@ const Login = () => {
               photoURL: photoURL,
             })
           );
-          navigate("/browse");
           // ...
         })
         .catch((error) => {

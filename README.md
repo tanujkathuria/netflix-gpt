@@ -16,6 +16,21 @@
 - added photo and name 
 - updated the profile 
 - redirected the app 
+- bug fix of the user sign in and sign out and not allow to /browse page directly without login - refirect to login screen 
+- unsubscribe to the auth state change callback 
+- register for the tmdb api and createan app and get the access token 
+- get the movies data in the browse component 
+- custom hooks
+- video player done 
+
+
+#### Firebase commands - 
+
+firebase login
+firebase init
+firebase deploy
+npm install -g firebase-tools
+x-gpt % firebase use --add
 
 
 
