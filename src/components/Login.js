@@ -45,13 +45,11 @@ const Login = () => {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
-          console.log(user);
           updateProfile(user, {
             displayName: name.current.value,
             photoURL: "https://avatars.githubusercontent.com/u/11907609?v=4",
           })
             .then(() => {
-              console.log("user has been updated");
               const { email, displayName, uid, photoURL } = auth.currentUser;
               dispatch(
                 addUser({
@@ -65,7 +63,6 @@ const Login = () => {
               // ...
             })
             .catch((error) => {
-              console.log("error while updating the profile", error);
               // An error occurred
               // ...
             });
@@ -73,14 +70,12 @@ const Login = () => {
           // ...
         })
         .catch((error) => {
-          console.log(error);
           const errorCode = error.code;
           const errorMessage = error.message;
           setErrorMessage(errorMessage);
           // ..
         });
     } else {
-      console.log("sing in with enail and password");
       // sign in form
       signInWithEmailAndPassword(
         auth,
@@ -90,7 +85,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
           const { email, displayName, uid, photoURL } = user;
           dispatch(
             addUser({

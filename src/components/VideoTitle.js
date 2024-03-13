@@ -2,9 +2,9 @@ import React from "react";
 
 const VideoTitle = ({ title, overview }) => {
   return (
-    <div className="w-screen aspect-video pt-[30%] px-6 text-left absolute  text-white bg-gradient-to-r from-black">
+    <div className="w-screen aspect-video pt-[20%] px-6 text-left absolute  text-white ">
       <h1 className="m-1 text-3xl font-bold">{title}</h1>
-      <p className="m-1 text-lg text-wrap w-40">{overview}</p>
+      <p className="m-1 text-lg text-wrap w-80">{overview}</p>
       <div className="flex">
         <button
           type="submit"

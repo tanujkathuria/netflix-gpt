@@ -14,7 +14,6 @@ const Header = () => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
-        console.log(user);
         const { email, displayName, uid, photoURL } = user;
         dispatch(
           addUser({
@@ -29,7 +28,6 @@ const Header = () => {
       } else {
         // User is signed out
         // ...
-        console.log("user has signed out");
         dispatch(removeUser());
         navigate("/");
       }
@@ -38,7 +36,6 @@ const Header = () => {
       unsubscribe();
     };
   }, []);
-  console.log(user);
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
