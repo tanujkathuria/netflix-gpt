@@ -13,17 +13,14 @@ const Header = () => {
   const showGPTSearch = useSelector((store) => store.gpt.showGPTSearch);
 
   const handleGPTSearchClick = () => {
-    console.log("handle gpt button has been clicked");
     dispatch(toggleGPTSearch());
   };
 
   const handleSignIn = () => {
-    console.log("handle sign in called ");
     navigate("/login");
   };
 
   const showSignInOut = () => {
-    console.log(user);
     if (!user) {
       return (
         <button className="px-1 text-white" onClick={handleSignIn}>

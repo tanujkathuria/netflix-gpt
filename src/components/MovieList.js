@@ -7,7 +7,7 @@ const MovieList = ({ title, movies }) => {
       <h1 className="font-bold text-2xl uppercase mt-2">{title}</h1>
       <div className="flex w-full flex-wrap m-2 p-4">
         {movies?.map((movie) => (
-          <MovieCard movie={movie}></MovieCard>
+          <MovieCard key={movie.id} movie={movie}></MovieCard>
         ))}
       </div>
     </div>

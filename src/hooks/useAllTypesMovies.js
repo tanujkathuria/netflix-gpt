@@ -15,10 +15,7 @@ const useAllTypesMovies = () => {
       const res = await fetch(MOVIES_URL, API_OPTIONS);
       const movies = await res.json();
       dispatch(addNowPlayingMovies(movies.results));
-      console.log(movies);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const getPopularMovies = async () => {
@@ -26,10 +23,7 @@ const useAllTypesMovies = () => {
       const res = await fetch(POPULAR_MOVIES_URL, API_OPTIONS);
       const movies = await res.json();
       dispatch(addPopularMovies(movies.results));
-      console.log(movies);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {

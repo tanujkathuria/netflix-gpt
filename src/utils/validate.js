@@ -1,7 +1,4 @@
 export const checkValidData = (email, password, name) => {
-  console.log("checkvaliddata", email);
-  console.log("checkvaliddata", password);
-  console.log("checkvaliddata", name);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const isEmailValid = emailRegex.test(email);
   if (name && !validateName(name)) return "name is not valid";

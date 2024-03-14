@@ -22,14 +22,10 @@ const GPTSearchBar = () => {
     if (!completion.choices) return;
     // handle error case
 
-    console.log(completion.choices[0].message.content);
     const gptMovies = completion.choices[0].message.content.split(",");
-    console.log(gptMovies);
     const promiseArray = gptMovies.map((movie) => findMovieInTMDB(movie));
-    console.log(promiseArray); // array of promises
     // for each movie search tmdb api
     const tmdbResults = await Promise.all(promiseArray);
-    console.log(tmdbResults);
     dispatch(
       addGPTMovieResults({
         movieNames: gptMovies,
@@ -42,7 +38,6 @@ const GPTSearchBar = () => {
     const url = `https://api.themoviedb.org/3/search/movie?query=${movie}&include_adult=true&page=1`;
     const response = await fetch(url, API_OPTIONS);
     const data = await response.json();
-    console.log(data);
     return data.results;
   };
 
