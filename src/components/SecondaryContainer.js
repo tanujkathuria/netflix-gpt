@@ -13,7 +13,7 @@ const SecondaryContainer = () => {
     movie list - horror 
     */
   return (
-    <div className="-mt-40 z-100 text-white bg-black">
+    <div className="text-white bg-black -mt-10">
       <MovieList title="now playing movies" movies={movies.nowPlayingMovies} />
       <MovieList title="popular movies" movies={movies.popularMovies} />
     </div>

@@ -4,11 +4,19 @@ import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
+import { toggleGPTSearch } from "../utils/gptSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
+  const showGPTSearch = useSelector((store) => store.gpt.showGPTSearch);
+
+  const handleGPTSearchClick = () => {
+    console.log("handle gpt button has been clicked");
+    dispatch(toggleGPTSearch());
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -49,7 +57,7 @@ const Header = () => {
   if (!user) return;
 
   return (
-    <div className="flex  px-8 py-2 bg-gradient-to-b from-black z-10 w-full justify-between">
+    <div className="flex flex-col px-8 py-2 z-10 w-full bg-gradient-to-t from-black md:justify-between sm:bg-blue-800 md:bg-green-800 md:flex-row">
       <img
         className="h-20 w-30 rounded-full"
         src="https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
@@ -57,7 +65,13 @@ const Header = () => {
         alt="logo"
       ></img>
 
-      <div className="flex justify-between w-42 h-14 m-4 cursor-pointer px-1">
+      <div className="flex justify-between w-42 h-12 m-4 cursor-pointer px-1 text-nowrap">
+        <button
+          className="px-4 py-2 m-2 bg-black text-white rounded-lg"
+          onClick={handleGPTSearchClick}
+        >
+          {!showGPTSearch ? "GPT Search" : "Home Page"}
+        </button>
         <div className="flex m-1">
           <img alt="profilepic" src={user?.photoURL}></img>
         </div>

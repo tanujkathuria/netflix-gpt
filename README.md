@@ -22,7 +22,8 @@
 - get the movies data in the browse component 
 - custom hooks
 - video player done 
-
+- GPT search feature 
+- GPT search page and bar 
 
 #### Firebase commands - 
 
