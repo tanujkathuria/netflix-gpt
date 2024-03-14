@@ -47,7 +47,8 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL: "https://avatars.githubusercontent.com/u/11907609?v=4",
+            photoURL:
+              "https://occ-0-2482-2186.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABTZ2zlLdBVC05fsd2YQAR43J6vB1NAUBOOrxt7oaFATxMhtdzlNZ846H3D8TZzooe2-FT853YVYs8p001KVFYopWi4D4NXM.png?r=229",
           })
             .then(() => {
               const { email, displayName, uid, photoURL } = auth.currentUser;
@@ -59,6 +60,7 @@ const Login = () => {
                   photoURL: photoURL,
                 })
               );
+              navigate("/");
               // Profile updated!
               // ...
             })
@@ -94,6 +96,7 @@ const Login = () => {
               photoURL: photoURL,
             })
           );
+          navigate("/");
           // ...
         })
         .catch((error) => {
@@ -109,6 +112,7 @@ const Login = () => {
       <Header></Header>
       <div className="absolute h-full w-full">
         <img
+          className="h-full w-full"
           src="https://assets.nflxext.com/ffe/siteui/vlv3/93da5c27-be66-427c-8b72-5cb39d275279/94eb5ad7-10d8-4cca-bf45-ac52e0a052c0/IN-en-20240226-popsignuptwoweeks-perspective_alpha_website_large.jpg"
           alt="bImg"
         />
