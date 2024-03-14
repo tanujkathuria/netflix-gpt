@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "netflix-gpt-c39f0",
+    "default": "netflixgpt-96a6b",
     "netflixgpt": "netflixgpt-96a6b"
   },
   "targets": {},

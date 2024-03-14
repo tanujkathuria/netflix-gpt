@@ -27,9 +27,12 @@
 
 #### Firebase commands - 
 
+make sure to run npm run build 
 firebase login
 firebase init
+firebase deploy --only functions after copying the .env file in funcions folder 
 firebase deploy
+
 npm install -g firebase-tools
 x-gpt % firebase use --add
 
